@@ -32,6 +32,23 @@ var albumMarconi = {
     ]
 };
 
+// sample album 3
+
+var albumKearney = {
+    title: 'Young Love',
+    artist: 'Mat Kearney',
+    label: 'Universal Republic Records',
+    year: '2011',
+    albumArtUrl: 'assets/images/album_covers/22.png',
+    songs: [
+        { title: 'Hey Mama', duration: '2:57' },
+        { title: 'Ships in the Night', duration: '4:15' },
+        { title: 'Count on Me', duration: '3:05'},
+        { title: 'Sooner or Later', duration: '3:56' },
+        { title: 'Chasing the Light', duration: '4:26'}
+    ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template = 
       '<tr class="album-view-song-item">'
@@ -60,10 +77,30 @@ var setCurrentAlbum = function(album) {
     albumSongList.innerHTML = '';
     
     for (var i = 0; i < album.songs.length; i++) {
-        albumSongList.innerHTML += createSongRow(i +1, album.songs[i].title, album.songs[i].duration);
+        albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
     }
 };
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
 };
+
+// add event listener to album cover
+// after onclick, needs to change albums - setCurrentAlbum
+
+var albumCover = document.getElementsByClassName('album-cover-art');
+
+var toggleAlbum = function(album) { 
+    for (var i = 0; i < albumCover.length; i++) {
+        return albumCover[i];
+    }
+}
+
+// add event listener to album cover
+albumCover.onclick = function() {
+    toggleAlbum(album);
+}
+                           
+                           
+
+
