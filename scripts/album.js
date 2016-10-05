@@ -88,18 +88,22 @@ window.onload = function() {
 // add event listener to album cover
 // after onclick, needs to change albums - setCurrentAlbum
 
-var albumCover = document.getElementsByClassName('album-cover-art');
 
-var toggleAlbum = function(album) { 
-    for (var i = 0; i < albumCover.length; i++) {
-        return albumCover[i];
+var allAlbums = [albumPicasso, albumMarconi, albumKearney];
+
+var i = 0;
+function changeAlbum() {
+    setCurrentAlbum(allAlbums[i]);
+    i++;
+    if (i >= allAlbums.length) {
+        i = 0;
     }
 }
 
-// add event listener to album cover
-albumCover.onclick = function() {
-    toggleAlbum(album);
-}
+document.getElementsByClassName('album-cover-art')[0].addEventListener('click', function() {
+    changeAlbum();
+})
+
                            
                            
 
