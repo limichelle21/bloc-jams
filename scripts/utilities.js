@@ -1,6 +1,6 @@
-function forEach(points, callback) {
+function forEach(array, callback) {
 // loop through an array of items
-    for (var i = 0; i < points.length; i++) {
+    for (var i = 0; i < array.length; i++) {
         // callback(element)
         callback(array[i]);
     };
