@@ -65,16 +65,15 @@ var setCurrentAlbum = function(album) {
 
 
 
-// start from a song-item-number element, check if the parent element class name = the table row class name
+// start from an element = more flexibility
 
-//var song = document.getElementsByClassName('.song-item-number')[0]; 
-//
-//var findParentByClassName = function(parentName, song) {
-//    var parent = song.parentNode.nodeValue;
+//var findParentByClassName = function(parentName, element) {
+//    var parent = element.parentNode;
 //    var count = 1;
 //    while(parent.getAttribute('class') != parentName) {
 //        parent = parent.parentNode;
 //        count ++;
+//        // could be an infinite loop if parent class name is never found
 //    }
 //    return parent;
 //}
