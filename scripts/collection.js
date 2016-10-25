@@ -1,4 +1,5 @@
-var collectionItemTemplate = 
+var buildCollectionItemTemplate = function() {
+    var template = 
        '<div class="collection-album-container column fourth">'
    + '  <img src="assets/images/album_covers/01.png"/>'
    + '  <div class="collection-album-info caption">'
@@ -13,17 +14,16 @@ var collectionItemTemplate =
    + '  </div>'
    + '</div>'
    ;
+    return $(template);
+    // wrap the template object as jQuery object for support
+};
 
-window.onload = function() {
-// select the first element with an 'album-cover' class name    
-    var collectionContainer = document.getElementsByClassName('album-covers')[0];
-    
-// assign an empty string to the collectionContainer's innerHTML property to clear content 
-    collectionContainer.innerHTML = '';
+ $(window).load(function() {
+     var $collectionContainer = $('.album-covers');
+     $collectionContainer.empty();
 
-// create a for-loop that will insert 12 albumns using the template to the innerHTML property 
-    
-    for (var i = 0; i < 12; i++) {
-        collectionContainer.innerHTML += collectionItemTemplate;
-    }
-}
+     for (var i = 0; i < 12; i++) {
+         var $newThumbnail = buildCollectionItemTemplate();
+         $collectionContainer.append($newThumbnail);
+     }
+ });
