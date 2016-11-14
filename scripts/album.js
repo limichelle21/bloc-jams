@@ -1,36 +1,4 @@
-// sample album
 
-var albumPicasso = {
-    title: 'The Colors',
-    artist: 'Pablo Picasso',
-    label: 'Cubism',
-    year: '1881',
-    albumArtUrl: 'assets/images/album_covers/01.png',
-    songs: [
-        { title: 'Blue', duration: '4:26' },
-        { title: 'Green', duration: '3:14' },
-        { title: 'Red', duration: '5:01' },
-        { title: 'Pink', duration: '3:21' },
-        { title: 'Magenta', duration: '2:15' }
-    ]
-};
-
-// sample album 2
-
-var albumMarconi = {
-    title: 'The Telephone',
-    artist: 'Guglielmo Marconi',
-    label: 'EM',
-    year: '1909',
-    albumArtUrl: 'assets/images/album_covers/20.png',
-    songs: [
-        { title: 'Hello, Operator?', duration: '1:01' },
-        { title: 'Ring, ring, ring', duration: '5:01' },
-        { title: 'Fits in your pocket', duration: '3:21'},
-        { title: 'Can you hear me now?', duration: '3:14' },
-        { title: 'Wrong phone number', duration: '2:15'}
-    ]
-};
 
 var createSongRow = function(songNumber, songName, songLength) {
     var template = 
@@ -52,17 +20,21 @@ var createSongRow = function(songNumber, songName, songLength) {
         var songItem = $(this).find('.song-item-number');
         var songNumber = songItem.attr("data-song-number");
     
-        if (currentlyPlayingSong === null) {
+        if (currentlyPlayingSongNumber === null) {
             songItem.html(pauseButtonTemplate);
-            currentlyPlayingSong = songNumber;
-        } else if (currentlyPlayingSong === songNumber) {
+            currentlyPlayingSongNumber = songNumber;
+            currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+        } else if (currentlyPlayingSongNumber === songNumber) {
             songItem.html(playButtonTemplate);
-            currentlyPlayingSong = null; 
-        } else if (currentlyPlayingSong !== songNumber) {
+            $('.main-controls .play-pause').html(playerBarPauseButton);
+            currentlyPlayingSongNumber = null; 
+            currentSongFromAlbum = null;
+        } else if (currentlyPlayingSongNumber !== songNumber) {
             songItem.html(pauseButtonTemplate);
-            currentlyPlayingSong = songNumber;
+            currentlyPlayingSongNumber = songNumber;
+            currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+            updatePlayerBarSong();
         }
-        
     };
     
     var onHover = function(event) {
@@ -70,7 +42,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         var songItem = $(this).find('.song-item-number');
         var songNumber = songItem.attr("data-song-number"); 
         // alt: var songNumber = songItem.data("song-number");
-            if (songNumber != currentlyPlayingSong) {
+            if (songNumber != currentlyPlayingSongNumber) {
                 songItem.html(playButtonTemplate)
                 };
     };
@@ -79,9 +51,9 @@ var createSongRow = function(songNumber, songName, songLength) {
         var songItem = $(this).find('.song-item-number');
         var songNumber = songItem.attr("data-song-number"); 
 
-        if (songNumber == currentlyPlayingSong) {
+        if (songNumber == currentlyPlayingSongNumber) {
             songItem.html(pauseButtonTemplate)
-        } else (songNumber != currentlyPlayingSong) {
+        } else (songNumber != currentlyPlayingSongNumber) {
             songItem.html(songNumber)
         }
     };
@@ -92,6 +64,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 };
 
 var setCurrentAlbum = function(album) {
+    currentAlbum = album;
     
     var $albumTitle = $('.album-view-title');
     var $albumArtist = $('.album-view-artist');
@@ -111,7 +84,53 @@ var setCurrentAlbum = function(album) {
      }
 };
 
+var trackIndex = function(album, song) {
+    return album.songs.indexOf(song);
+};
 
+var updatePlayerBarSong = function() {
+  // update text of h2 tags that contain song name and artist name
+    // reference current song variables to populate
+    // jQuery selectors by class, then update by html, value = current song variables
+    
+    $('.currently-playing .song-name').text(currentSongFromAlbum.title);
+    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentSongFromAlbum.artist);
+    $('.currently-playing .artist-name').text(currentSongFromAlbum.artist);
+
+    
+    $('.main-controls .play-pause').html(playerBarPauseButton);
+};
+
+
+// think of it like next-button on a photo carousel
+
+var nextSong = function() {
+    // need currentPlayingSongNumber - store in var previousSong?
+    // use trackIndex(), pass in currentAlbum, currentPlayingSongNumber ---> 
+    // returns index then need a function to increment the var
+    // if trackIndex is higher than number of elements (album.length), set trackIndex = 0
+    // for loop - trackIndex < album.length; i++ 
+    // set currentlyPlayingSongNumber = currentSongFromAlbum
+    // updatePlayerBarSong();
+    // $('.song-item-number).html(previousSong);
+    // $('.song-item-number).html(pauseButtonTemplate);
+    
+    var previousSong = currentlyPlayingSongNumber;
+    
+    var currentIndex = trackIndex(currentAlbum, currentlyPlayingSongNumber);
+    
+    currentIndex++;
+     
+   if (currentIndex >= currentAlbum.songs.length) {
+       currentIndex = 0;
+   }
+    
+    currentlyPlayingSongNumber = currentIndex + 1; 
+    
+    updatePlayerBarSong;
+    
+    
+};
 
 
 // if no song is playing, on click, set the songItem innerHTML to the pause button and set current song to the song item's data song number
@@ -123,8 +142,12 @@ var setCurrentAlbum = function(album) {
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
+var playerBarPlayButton = '<span class="ion-play"></span>';
+var playerBarPauseButton = '<span class="ion-pause"></span>';
 
-var currentlyPlayingSong = null;
+var currentAlbum = null;
+var currentlyPlayingSongNumber = null;
+var currentSongFromAlbum = null;
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
