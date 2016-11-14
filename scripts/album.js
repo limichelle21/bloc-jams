@@ -52,17 +52,13 @@ var createSongRow = function(songNumber, songName, songLength) {
         var songItem = $(this).find('.song-item-number');
         var songNumber = songItem.attr("data-song-number");
     
-        if (currentlyPlayingSong === null) {
+        if (currentlyPlayingSong === null || currentlyPlayingSong !== songNumber) {
             songItem.html(pauseButtonTemplate);
             currentlyPlayingSong = songNumber;
         } else if (currentlyPlayingSong === songNumber) {
             songItem.html(playButtonTemplate);
             currentlyPlayingSong = null; 
-        } else if (currentlyPlayingSong !== songNumber) {
-            songItem.html(pauseButtonTemplate);
-            currentlyPlayingSong = songNumber;
         }
-        
     };
     
     var onHover = function(event) {
