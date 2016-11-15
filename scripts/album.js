@@ -20,20 +20,16 @@ var createSongRow = function(songNumber, songName, songLength) {
         var songItem = $(this).find('.song-item-number');
         var songNumber = songItem.attr("data-song-number");
     
-        if (currentlyPlayingSongNumber === null) {
+        if (currentlyPlayingSongNumber === null || currentlyPlayingSongNumber !== songNumber) {
             songItem.html(pauseButtonTemplate);
             currentlyPlayingSongNumber = songNumber;
             currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+            updatePlayerBarSong();
         } else if (currentlyPlayingSongNumber === songNumber) {
             songItem.html(playButtonTemplate);
             $('.main-controls .play-pause').html(playerBarPauseButton);
             currentlyPlayingSongNumber = null; 
             currentSongFromAlbum = null;
-        } else if (currentlyPlayingSongNumber !== songNumber) {
-            songItem.html(pauseButtonTemplate);
-            currentlyPlayingSongNumber = songNumber;
-            currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
-            updatePlayerBarSong();
         }
     };
     
@@ -105,20 +101,20 @@ var updatePlayerBarSong = function() {
 // think of it like next-button on a photo carousel
 
 var nextSong = function() {
-    // need currentPlayingSongNumber - store in var previousSong?
-    // use trackIndex(), pass in currentAlbum, currentPlayingSongNumber ---> 
+    // need to know the previous song. use current index as starting point
+    // use trackIndex(), pass in currentAlbum, currentSongFromAlbum ---> 
     // returns index then need a function to increment the var
-    // if trackIndex is higher than number of elements (album.length), set trackIndex = 0
-    // for loop - trackIndex < album.length; i++ 
+    // if currentIndex is higher than number of elements (album.length), set currentIndex = 0 - return to first song in the album
     // set currentlyPlayingSongNumber = currentSongFromAlbum
     // updatePlayerBarSong();
     // $('.song-item-number).html(previousSong);
     // $('.song-item-number).html(pauseButtonTemplate);
     
-    var previousSong = currentlyPlayingSongNumber;
+    var previousSongNumber = function(index) {
+        return index == 0 ? currentAlbum.songs.length : index;
+    }
     
-    var currentIndex = trackIndex(currentAlbum, currentlyPlayingSongNumber);
-    
+    var currentIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     currentIndex++;
      
    if (currentIndex >= currentAlbum.songs.length) {
@@ -126,9 +122,16 @@ var nextSong = function() {
    }
     
     currentlyPlayingSongNumber = currentIndex + 1; 
+    currentSongFromAlbum = currentAlbum.songs[currentIndex];
     
-    updatePlayerBarSong;
+    updatePlayerBarSong();
     
+    var lastSongNumber = previousSongNumber()
+    
+    
+};
+
+var previousSong = function() {
     
 };
 
