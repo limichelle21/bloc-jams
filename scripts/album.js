@@ -14,13 +14,10 @@ var createSongRow = function(songNumber, songName, songLength) {
         // Set songItem to a Pause button and set currentlyPlayingSong to the songNumber
         // Switch from Pause to Play button to pause currently playing song 
         // Switch from Play to Pause button to indicate new song is playing
-        
-        var songItem = $(this).find('.song-item-number');
-        
+    
+
         var songNumber = parseInt($(this).attr("data-song-number"));
         console.log("songNumber type is " + typeof songNumber + "\n and currentlyPlayingSongNumber type is " + typeof currentlyPlayingSongNumber);
-        
-    // songItem isn't being set??
         
         if (currentlyPlayingSongNumber !== null) {
             var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
@@ -37,6 +34,7 @@ var createSongRow = function(songNumber, songName, songLength) {
             $('.main-controls .play-pause').html(playerBarPauseButton);
             currentlyPlayingSongNumber = null; 
             currentSongFromAlbum = null;
+ 
         }
     };
     
