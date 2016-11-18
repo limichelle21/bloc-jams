@@ -120,6 +120,48 @@ var updatePlayerBarSong = function() {
         // $('.song-item-number).html(previousSong);
         // $('.song-item-number).html(pauseButtonTemplate);
 
+var changeSong = function() {
+    var currentIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    
+    var currentSongNumber = currentIndex + 1;
+    
+    if $(this).is(".main-controls .previous") {
+        var previousSongNumber = function(index) {
+            return index == (currentAlbum.songs.length - 1) ? 1 : index + 2;
+        };
+        currentIndex--;
+        if (currentIndex >= currentAlbum.songs.length) {
+            currentIndex = 0;
+        };
+        
+    } else if $(this).is(".main-controls .next") {
+        var previousSongNumber = function(index) {
+            return index == 0 ? currentAlbum.songs.length : index;
+        };
+        currentIndex++;
+        if (currentIndex < 0) {
+            currentIndex = currentAlbum.songs.length - 1;
+        };   
+    }
+   
+    var newSongNumber = currentIndex + 1;
+    setSong(newSongNumber);
+    
+// update bar information    
+    updatePlayerBarSong();
+    
+    var lastSongNumber = previousSongNumber(currentIndex);
+// create variables for next song and prev song elements on page
+    var nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var lastSongNumberCell = getSongNumberCell(lastSongNumber);
+// update html of song elements on page
+    $nextSongNumberCell.html(pauseButtonTemplate);
+    $lastSongNumberCell.html(lastSongNumber); 
+    
+}
+
+
+
 
 var nextSong = function() {
 // if index = 0, the previous song number = last song number
@@ -157,7 +199,7 @@ var nextSong = function() {
 var previousSong = function() {
     var previousSongNumber = function(index) {
 // if index == index of last song, previous song number is 1, else index + 1 + 1 for song number       
-        return index == (currentAlbum.songs.length - 1) ? 1 : index + 2  
+        return index == (currentAlbum.songs.length - 1) ? 1 : index + 2; 
     }; 
     
 // set currentIndex
