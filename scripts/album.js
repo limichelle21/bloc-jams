@@ -122,7 +122,6 @@ var updatePlayerBarSong = function() {
 
 var changeSong = function() {
     var currentIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-    
     var currentSongNumber = currentIndex + 1;
     
     if $(this).is(".main-controls .previous") {
@@ -152,13 +151,13 @@ var changeSong = function() {
     
     var lastSongNumber = previousSongNumber(currentIndex);
 // create variables for next song and prev song elements on page
-    var nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
-    var lastSongNumberCell = getSongNumberCell(lastSongNumber);
+    var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
 // update html of song elements on page
     $nextSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber); 
     
-}
+};
 
 
 
@@ -186,8 +185,8 @@ var nextSong = function() {
 // set the last song's number
     var lastSongNumber = previousSongNumber(currentIndex);
 // create variables for next song and prev song elements on page
-    var nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
-    var lastSongNumberCell = getSongNumberCell(lastSongNumber);
+    var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
 // update html of song elements on page
     $nextSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber); 
@@ -251,8 +250,8 @@ var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
-    $previousButton.click(previousSong);
-    $nextButton.click(nextSong);
+    $previousButton.click(changeSong);
+    $nextButton.click(changeSong);
 });
 
 
