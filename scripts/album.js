@@ -220,8 +220,8 @@ var previousSong = function() {
     
     var lastSongNumber = previousSongNumber(currentIndex);
 // create variables for next song and prev song elements on page
-    var previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
-    var lastSongNumberCell = getSongNumberCell(lastSongNumber);
+    var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
 // update html of song elements on page
     $previousSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber); 
