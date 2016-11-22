@@ -211,15 +211,18 @@ var previousSong = function() {
 
 
 var togglePlayFromPlayerBar = function() {
-    if song is paused && play button is clicked
-    change song number cell from play to pauseButtonTemplate
-    change HTML of player bar play button to pause 
-    play song 
-    if song is playing and pause is clicked
-    change song number cell from pause to play 
-    change HTML from pause to play
-    pause song 
-}
+    var $currentSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    
+    if (currentSoundFile.isPaused) {
+        $currentSongNumberCell.html(pauseButtonTemplate);
+        $('.main-controls .play-pause').html(playerBarPauseButton);
+        currentSoundFile.play();
+    } else {
+        $currentSongNumberCell.html(playButtonTemplate);
+        $('.main-controls .play-pause').html(playerBarPlayButton);
+        currentSoundFile.pause();
+    }
+};
 
 
 
