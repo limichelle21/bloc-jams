@@ -210,6 +210,19 @@ var previousSong = function() {
 };
 
 
+var togglePlayFromPlayerBar = function() {
+    if song is paused && play button is clicked
+    change song number cell from play to pauseButtonTemplate
+    change HTML of player bar play button to pause 
+    play song 
+    if song is playing and pause is clicked
+    change song number cell from pause to play 
+    change HTML from pause to play
+    pause song 
+}
+
+
+
 // if no song is playing, on click, set the songItem innerHTML to the pause button and set current song to the song item's data song number
     
 // else if the clicked song IS playing/active, on click, change the innerHTML to the play button and erase current song data by setting to null 
@@ -231,10 +244,14 @@ var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 
+var $playerBarControl = $('.main-controls .play-pause') 
+
+
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playerBarControl.click(togglePlayFromPlayerBar);
 });
 
 
