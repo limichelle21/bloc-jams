@@ -213,14 +213,18 @@ var previousSong = function() {
 var togglePlayFromPlayerBar = function() {
     var $currentSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
     
-    if (currentSoundFile.isPaused) {
-        $currentSongNumberCell.html(pauseButtonTemplate);
-        $('.main-controls .play-pause').html(playerBarPauseButton);
-        currentSoundFile.play();
+    if (!currentlyPlayingSongNumber) {
+        nextSong();
     } else {
-        $currentSongNumberCell.html(playButtonTemplate);
-        $('.main-controls .play-pause').html(playerBarPlayButton);
-        currentSoundFile.pause();
+        if (currentSoundFile.isPaused()) {
+            $currentSongNumberCell.html(pauseButtonTemplate);
+            $('.main-controls .play-pause').html(playerBarPauseButton);
+            currentSoundFile.play();
+        } else {
+            $currentSongNumberCell.html(playButtonTemplate);
+            $('.main-controls .play-pause').html(playerBarPlayButton);
+            currentSoundFile.pause();
+        }
     }
 };
 
