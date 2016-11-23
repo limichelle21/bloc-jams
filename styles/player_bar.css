@@ -89,10 +89,10 @@
     cursor: pointer;
 }
 
-/*.fille is a statid element that appears as a line*/
+/*.fille is a static element that appears as a line*/
 .seek-bar .fill {
     background-color: white;
-    width: 36%;
+    width: 0%;
     height: 0.25rem;
     border-radius: 2px;
 }
@@ -110,7 +110,10 @@
     cursor: pointer;
     -webkit-transition: all 100ms ease-in-out;
     -moz-transition: all 100ms ease-in-out;
-    transition: all 100ms ease-in-out;
+    transition: width 100ms ease-in-out, 
+        height 100ms ease-in-out, 
+        margin-top 100ms ease-in-out,
+        margin-left 100ms ease-in-out;
 }
 
 .seek-bar:hover .thumb {
