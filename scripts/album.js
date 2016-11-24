@@ -239,7 +239,7 @@ var nextSong = function() {
     updateSeekBarWhileSongPlays();
 // update bar information
     updatePlayerBarSong();
-    
+    setVolumeBar(currentVolume);
 // set the last song's number
     var lastSongNumber = previousSongNumber(currentIndex);
 // create variables for next song and prev song elements on page
@@ -277,7 +277,7 @@ var previousSong = function() {
     updateSeekBarWhileSongPlays();
 // update bar information    
     updatePlayerBarSong();
-    
+    setVolumeBar(currentVolume);
     var lastSongNumber = previousSongNumber(currentIndex);
 // create variables for next song and prev song elements on page
     var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
@@ -286,6 +286,25 @@ var previousSong = function() {
     $previousSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber); 
 
+};
+
+var togglePlayFromPlayerBar = function() {
+    var $currentSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    
+    if (!currentlyPlayingSongNumber) {
+        nextSong();
+    } else {
+        if (currentSoundFile.isPaused()) {
+            $currentSongNumberCell.html(pauseButtonTemplate);
+            $('.main-controls .play-pause').html(playerBarPauseButton);
+            currentSoundFile.play();
+            setVolumeBar(currentVolume);
+        } else {
+            $currentSongNumberCell.html(playButtonTemplate);
+            $('.main-controls .play-pause').html(playerBarPlayButton);
+            currentSoundFile.pause();
+        }
+    }
 };
 
 
@@ -310,11 +329,14 @@ var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 
+var $playerBarControl = $('.main-controls .play-pause');
+
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
     setupSeekBars();
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playerBarControl.click(togglePlayFromPlayerBar);
 });
 
 
